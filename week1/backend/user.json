@@ -1,0 +1,21 @@
+[{
+  "professionalName": "Te Ara Erueti",
+  "base64Image": "iVBORw0KGgoAAAANSUhEUgAAA...", 
+  "nameLink": {
+    "firstName": "Te Ara",
+    "url": "https://example.com"
+  },
+  "primaryDescription": "Software Developer and Coach",
+  "workDescription1": "Building full stack apps using JavaScript and MongoDB.",
+  "workDescription2": "Passionate about clean code and education.",
+  "linkTitleText": "Find Me On:",
+  "linkedInLink": {
+    "text": "LinkedIn",
+    "link": "https://linkedin.com/in/example"
+  },
+  "githubLink": {
+    "text": "GitHub",
+    "link": "https://github.com/example"
+  }
+}
+]
