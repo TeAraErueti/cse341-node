@@ -1,2 +1,6 @@
 GET http://localhost:8080/professional
+<<<<<<< HEAD
 # the request above returns a json object with all professional data for Nathan Birch. No database is connected.
+=======
+# the request above returns a json object with all professional data for Te Ara. No database is connected.
+>>>>>>> 8e63b264be23e7b4ca560df7938d66d0893645b9
