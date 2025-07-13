@@ -36,6 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // ✅ Mount Swagger UI ONLY at /api-docs
 app.use('/api-docs', swaggerRouter);
 
