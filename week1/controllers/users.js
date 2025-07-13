@@ -2,6 +2,7 @@ const mongodb = require('../data/database');
 const { ObjectId } = require('mongodb');
 
 const getAll = async (req, res) => {
+  //#swagger.tags=['Users'];
   console.log('Using DB:', process.env.DB_NAME);
 
   const db = mongodb.getDatabase();
@@ -23,7 +24,7 @@ const getAll = async (req, res) => {
 
 
 const getSingle = async (req, res) => {
-  //#swager.tags=['Users'];
+ //#swagger.tags=['Users'];
   try {
     const userId = new ObjectId(req.params.id);
     const userDoc = await mongodb.getDatabase().collection('users').findOne({ _id: userId });
@@ -39,7 +40,7 @@ const getSingle = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  //#swager.tags=['Users'];
+  //#swagger.tags=['Users'];
   const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -60,7 +61,7 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  //#swager.tags=['Users'];
+  //#swagger.tags=['Users'];
   const userId = new ObjectId(req.params.id);
   const user = {
     firstName: req.body.firstName,
@@ -82,7 +83,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  //#swager.tags=['Users'];
+  //#swagger.tags=['Users'];
   const userId = new ObjectId(req.params.id);
   try {
     const response = await mongodb.getDatabase().collection('users').deleteOne({ _id: userId });
