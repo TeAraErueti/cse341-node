@@ -1,1 +1,43 @@
-GET https://teara341-node.onrender.com/users
+Get http://localhost:3000
+
+
+### Get all contacts
+GET http://localhost:3000/users
+
+###
+
+### Get a specific contact by ID
+GET http://localhost:3000/users/68734f8176e807b581c64998
+
+###
+
+### Create a new contact
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Bella",
+  "lastName": "Bonania",
+  "email": "BBTest@test.com",
+  "favoriteColor": "Yellow",
+  "birthday": "02/05/87"
+}
+
+###
+
+### Update an existing contact by ID
+PUT http://localhost:3000/users/68737397bfbb7de0b1553712
+Content-Type: application/json
+
+{
+   "firstName": "Bella",
+  "lastName": "Bonania",
+  "email": "BBTest@test.com",
+  "favoriteColor": "Yellow",
+  "birthday": "02/05/87"
+}
+
+###
+
+### Delete a contact (example)
+DELETE http://localhost:3000/users/68737397bfbb7de0b1553712

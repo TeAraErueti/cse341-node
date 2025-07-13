@@ -5,12 +5,8 @@ const router = express.Router();
 
 router.get('/', getData);
 
-<<<<<<< HEAD
-export { router };
-=======
-export default router;
+export {router};
 
->>>>>>> 8e63b264be23e7b4ca560df7938d66d0893645b9
 
 
 
