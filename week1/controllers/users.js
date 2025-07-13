@@ -2,15 +2,18 @@ const mongodb = require('../data/database');
 const { ObjectId } = require('mongodb');
 
 const getAll = async (req, res) => {
-  //#swager.tags=['Users'];
+  console.log('✅ getAll controller hit'); // ← add this
   try {
     const result = await mongodb.getDatabase().collection('users').find();
     const users = await result.toArray();
+    console.log('✅ users retrieved:', users.length); // ← and this
     res.status(200).json(users);
   } catch (err) {
+    console.error('❌ Error in getAll:', err); // ← and this
     res.status(500).json({ message: 'Error retrieving users', error: err.message });
   }
 };
+
 
 const getSingle = async (req, res) => {
   //#swager.tags=['Users'];
