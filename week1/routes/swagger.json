@@ -5,7 +5,7 @@
     "description": "API Documentation for Users",
     "version": "1.0.0"
   },
-  "host": "https://teara341-node.onrender.com",
+  "host": "teara341-node.onrender.com",
   "basePath": "/",
   "schemes": ["https"],
   "consumes": ["application/json"],
