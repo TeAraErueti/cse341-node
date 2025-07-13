@@ -3,6 +3,11 @@ const router = express.Router();
 
 const usersController = require('../controllers/users');
 
+// Simple test route to confirm router is working
+router.get('/test', (req, res) => {
+  res.json({ message: '✅ Test users route working' });
+});
+
 router.get('/', usersController.getAll);
 
 router.get('/:id', usersController.getSingle);
