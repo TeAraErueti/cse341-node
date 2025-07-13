@@ -2,14 +2,21 @@ const mongodb = require('../data/database');
 const { ObjectId } = require('mongodb');
 
 const getAll = async (req, res) => {
-  console.log('✅ getAll controller hit'); // ← add this
+  console.log('Using DB:', process.env.DB_NAME);
+
+  const db = mongodb.getDatabase();
+
+  const collections = await db.listCollections().toArray();
+  console.log('Collections:', collections.map(c => c.name));
+
   try {
-    const result = await mongodb.getDatabase().collection('users').find();
+    console.log('✅ getAll controller hit');
+    const result = await db.collection('users').find();
     const users = await result.toArray();
-    console.log('✅ users retrieved:', users.length); // ← and this
+    console.log('✅ users retrieved:', users.length);
     res.status(200).json(users);
   } catch (err) {
-    console.error('❌ Error in getAll:', err); // ← and this
+    console.error('❌ Error in getAll:', err);
     res.status(500).json({ message: 'Error retrieving users', error: err.message });
   }
 };
