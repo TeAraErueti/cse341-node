@@ -6,11 +6,7 @@ async function apiFetch(url) {
 }
 
 const getData = async () => {
-<<<<<<< HEAD
   const data = await apiFetch('http://localhost:8080/professional');
-=======
-  const data = await apiFetch('http://localhost:8080/api/user');
->>>>>>> 8e63b264be23e7b4ca560df7938d66d0893645b9
   displayAllData(data);
 };
 
@@ -30,23 +26,9 @@ function displayProfessionalName(n) {
 }
 
 function displayImage(img) {
-<<<<<<< HEAD
   let image = document.getElementById('professionalImage');
   image.src = `data:image/png;base64, ${img}`;
 }
-=======
-  console.log('Received base64 image:', img); // Log it
-  let image = document.getElementById('professionalImage');
-
-  if (!img || img.length < 100) {
-    console.error('Image data is invalid or missing');
-    return;
-  }
-
-  image.src = `data:image/png;base64, ${img}`;
-}
-
->>>>>>> 8e63b264be23e7b4ca560df7938d66d0893645b9
 function displayPrimaryDescription(data) {
   let nameLink = document.getElementById('nameLink');
   nameLink.innerHTML = data.nameLink.firstName;

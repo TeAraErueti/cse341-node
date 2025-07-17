@@ -12,12 +12,12 @@ const __dirname = dirname(__filename);
 // Load .env from week1
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-console.log('MONGODB_URI:', process.env.MONGODB_URI);  // ✅ This should NOT be undefined
+console.log('MONGODB_URI:', process.env.MONGODB_URI);  
 console.log('DB_NAME:', process.env.DB_NAME);
 
 let _db;
 
-export const initDb = async () => {  // <-- renamed here
+export const initDb = async () => {  
   const uri = process.env.MONGODB_URI;
   const dbName = process.env.DB_NAME;
 
@@ -32,6 +32,6 @@ export const initDb = async () => {  // <-- renamed here
 };
 
 export const getDb = () => {
-  if (!_db) throw new Error('❌ DB not initialized. Call initDb() first.');  // <-- updated message
+  if (!_db) throw new Error('❌ DB not initialized. Call initDb() first.'); 
   return _db;
 };
