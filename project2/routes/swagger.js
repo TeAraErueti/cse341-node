@@ -4,7 +4,8 @@ const swaggerDocument = require('../swagger.json'); // Adjust path if needed
 
 const router = express.Router();
 
-router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(swaggerDocument));
 
 module.exports = router;
 
