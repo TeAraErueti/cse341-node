@@ -1,8 +1,8 @@
 {
   "name": "cse341-node",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CSE341 Repo for July 2025 project work.",
+  "main": "server.js",
   "dependencies": {
     "accepts": "^2.0.0",
     "append-field": "^1.0.0",
@@ -110,7 +110,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node week1/server.js"
+    "start-week1": "node week1/server.js",
+    "start-week2": "node week1/server.js",
+    "start-project2": "node project2/server.js"
   },
   "repository": {
     "type": "git",
@@ -123,5 +125,6 @@
   "bugs": {
     "url": "https://github.com/TeAraErueti/cse341-node/issues"
   },
-  "homepage": "https://github.com/TeAraErueti/cse341-node#readme"
+  "homepage": "https://github.com/TeAraErueti/cse341-node#readme",
+  "devDependencies": {}
 }
