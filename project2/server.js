@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // ✅ Added CORS middleware
 const mongodb = require('./data/database');
 const swaggerRouter = require('./routes/swagger');
 const mainRoutes = require('./routes');
@@ -21,20 +22,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// ✅ Enable CORS for all origins
+app.use(cors()); // ✅ Handles preflight and all headers
+
 // ✅ JSON parsing
 app.use(express.json());
 app.use(bodyParser.json());
-
-// ✅ CORS headers
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  next();
-});
 
 // ✅ Swagger UI route
 app.use('/api-docs', swaggerRouter);
@@ -73,21 +66,14 @@ mongodb.initDb()
     process.exit(1); // Exit if DB connection fails
   });
 
-
 // ✅ Catch uncaught exceptions
 process.on('uncaughtException', (err, origin) => {
-  console.error(
-    `🚨 Uncaught Exception:\n${err.stack || err}\n📍 Origin: ${origin}`
-  );
-  process.exit(1); // Optional: Exit the process
+  console.error(`🚨 Uncaught Exception:\n${err.stack || err}\n📍 Origin: ${origin}`);
+  process.exit(1);
 });
 
 // ✅ Catch unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
-  console.error(
-    '🚨 Unhandled Rejection at:', promise,
-    '\n💥 Reason:', reason
-  );
-  process.exit(1); // Optional: Exit the process
+  console.error('🚨 Unhandled Rejection at:', promise, '\n💥 Reason:', reason);
+  process.exit(1);
 });
-
