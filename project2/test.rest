@@ -1,0 +1,47 @@
+Get http://localhost:3000
+
+
+### Get all contacts
+GET http://localhost:3000/users
+
+###
+
+### Get a specific contact by ID
+GET http://localhost:3000/users/68734f8176e807b581c64998
+
+###
+
+### Create a new contact
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Bella",
+  "lastName": "Bonania",
+  "email": "BBTest@test.com",
+  "nationality": "Maori",
+  "birthday": "02/05/87",
+  "phone": "123-456-7890",
+  "address": "123 Test St, Test City, TC 12345"
+}
+
+###
+
+### Update an existing contact by ID
+PUT http://localhost:3000/users/68737397bfbb7de0b1553712
+Content-Type: application/json
+
+{
+  "firstName": "Bella",
+  "lastName": "Bonania",
+  "email": "BBTest@test.com",
+  "nationality": "Maori",
+  "birthday": "02/05/87",
+  "phone": "123-456-7890",
+  "address": "123 Test St, Test City, TC 12345"
+}
+
+###
+
+### Delete a contact (example)
+DELETE http://localhost:3000/users/68737397bfbb7de0b1553712
