@@ -1,6 +1,6 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json'); // Adjust path if needed
+const swaggerDocument = require('./swagger.json'); 
 
 const router = express.Router();
 
