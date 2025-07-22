@@ -1,8 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path'); 
 const mongodb = require('./data/database');
-const swaggerRouter = require('./routes/swagger'); // Adjust path if needed
+const swaggerRouter = require('./routes/swagger'); 
 const mainRoutes = require('./routes');
 
 dotenv.config({ path: './project2/.env' });
@@ -20,6 +21,11 @@ app.use(express.json());
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   next();
+});
+
+// Serve swagger.json so Swagger UI can use it correctly
+app.get('/swagger.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'routes', 'swagger.json'));
 });
 
 // Swagger UI route
