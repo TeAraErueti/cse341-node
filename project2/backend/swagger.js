@@ -11,8 +11,8 @@ const doc = {
   schemes: ['http'],
 };
 
-const outputFile = './week1/routes/swagger.json';
-const endpointsFiles = ['./week1/routes/index.js'];
+const outputFile = './project2/routes/swagger.json';
+const endpointsFiles = ['./project2/routes/index.js'];
 
 swaggerAutogenInstance(outputFile, endpointsFiles, doc).then(() => {
   console.log('✅ Swagger JSON generated');
