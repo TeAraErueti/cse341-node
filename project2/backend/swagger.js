@@ -11,7 +11,7 @@ const doc = {
   schemes: ['http'],
 };
 
-const outputFile = './project2/routes/swagger.json';
+const outputFile = './project2/swagger.json';
 const endpointsFiles = ['./project2/routes/index.js'];
 
 swaggerAutogenInstance(outputFile, endpointsFiles, doc).then(() => {
