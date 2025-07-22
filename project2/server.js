@@ -44,6 +44,16 @@ app.use('/api-docs', swaggerRouter);
 // Your main app routes
 app.use('/', mainRoutes);
 
+
+app.get('/list-files', (req, res) => {
+  const fs = require('fs');
+  fs.readdir(__dirname, (err, files) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ files });
+  });
+});
+
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ message: '❌ Route not found' });
