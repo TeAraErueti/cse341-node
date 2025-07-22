@@ -2,7 +2,7 @@
   "name": "cse341-node",
   "version": "1.0.0",
   "description": "CSE341 Repo for July 2025 project work.",
-  "main": "server.js",
+  "main": "project2/server.js",
   "dependencies": {
     "accepts": "^2.0.0",
     "append-field": "^1.0.0",
