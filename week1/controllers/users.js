@@ -1,53 +1,56 @@
 const mongodb = require('../data/database');
 const { ObjectId } = require('mongodb');
 
+// GET all users
 const getAll = async (req, res) => {
-  //#swagger.tags=['Users'];
-  console.log('Using DB:', process.env.DB_NAME);
-
-  const db = mongodb.getDatabase();
-
-  const collections = await db.listCollections().toArray();
-  console.log('Collections:', collections.map(c => c.name));
-
   try {
-    console.log('✅ getAll controller hit');
-    const result = await db.collection('users').find();
-    const users = await result.toArray();
-    console.log('✅ users retrieved:', users.length);
+    const db = mongodb.getDatabase();
+    const users = await db.collection('users').find().toArray();
+
+    res.setHeader('Content-Type', 'application/json');
     res.status(200).json(users);
   } catch (err) {
-    console.error('❌ Error in getAll:', err);
-    res.status(500).json({ message: 'Error retrieving users', error: err.message });
+    console.error('❌ Error fetching users:', err);
+    res.status(500).json({ message: 'Error fetching users', error: err.message });
   }
 };
 
 
+// GET a single user
 const getSingle = async (req, res) => {
- //#swagger.tags=['Users'];
-  try {
-    const userId = new ObjectId(req.params.id);
-    const userDoc = await mongodb.getDatabase().collection('users').findOne({ _id: userId });
+  const id = req.params.id;
 
-    if (!userDoc) {
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Must use a valid user ID to find a user.' });
+  }
+
+  try {
+    const userId = new ObjectId(id);
+    const db = mongodb.getDatabase();
+    const user = await db.collection('users').findOne({ _id: userId });
+
+    if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(200).json(userDoc);
-  } catch (err) {
-    res.status(500).json({ message: 'Error retrieving user', error: err.message });
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('❌ Error retrieving user:', error);
+    res.status(500).json({ message: 'Error retrieving user', error: error.message });
   }
 };
 
+// POST create new user
 const createUser = async (req, res) => {
-  //#swagger.tags=['Users'];
   const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     favoriteColor: req.body.favoriteColor,
-    birthday: req.body.birthday,
+    birthday: req.body.birthday
   };
+
   try {
     const response = await mongodb.getDatabase().collection('users').insertOne(user);
     if (response.acknowledged) {
@@ -60,31 +63,43 @@ const createUser = async (req, res) => {
   }
 };
 
+// PUT update user
 const updateUser = async (req, res) => {
-  //#swagger.tags=['Users'];
-  const userId = new ObjectId(req.params.id);
+  const id = req.params.id;
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json('Must use a valid user ID to update a user.');
+  }
+
+  const userId = new ObjectId(id);
   const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     favoriteColor: req.body.favoriteColor,
-    birthday: req.body.birthday,
+    birthday: req.body.birthday
   };
+
   try {
     const response = await mongodb.getDatabase().collection('users').replaceOne({ _id: userId }, user);
     if (response.modifiedCount > 0) {
       res.status(204).send();
     } else {
-      res.status(404).json({ message: 'User not found or nothing changed' });
+      res.status(404).json({ message: 'User not found or no changes made' });
     }
   } catch (err) {
     res.status(500).json({ message: 'Error updating user', error: err.message });
   }
 };
 
+// DELETE user
 const deleteUser = async (req, res) => {
-  //#swagger.tags=['Users'];
-  const userId = new ObjectId(req.params.id);
+  const id = req.params.id;
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json('Must use a valid user ID to delete a user.');
+  }
+
+  const userId = new ObjectId(id);
+
   try {
     const response = await mongodb.getDatabase().collection('users').deleteOne({ _id: userId });
     if (response.deletedCount > 0) {
@@ -104,3 +119,4 @@ module.exports = {
   updateUser,
   deleteUser
 };
+

@@ -101,6 +101,7 @@
     "uid-safe": "^2.1.5",
     "unpipe": "^1.0.0",
     "util-deprecate": "^1.0.2",
+    "validatorjs": "^3.22.1",
     "vary": "^1.1.2",
     "webidl-conversions": "^7.0.0",
     "whatwg-url": "^14.2.0",

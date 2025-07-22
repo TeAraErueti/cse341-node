@@ -2,20 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const usersController = require('../controllers/users');
-
-// Simple test route to confirm router is working
-router.get('/test', (req, res) => {
-  res.json({ message: '✅ Test users route working' });
-});
+const validation = require('../middleware/validateUser');
 
 router.get('/', usersController.getAll);
 
-router.get('/:id', usersController.getSingle);
+router.get('/:id', validation.checkId, usersController.getSingle);
 
-router.post('/', usersController.createUser);
+router.post('/', validation.saveUser, usersController.createUser);
 
-router.put('/:id', usersController.updateUser);
+router.put('/:id', validation.checkId, validation.saveUser, usersController.updateUser);
 
-router.delete('/:id', usersController.deleteUser);
+router.delete('/:id', validation.checkId, usersController.deleteUser);
 
 module.exports = router;
+
