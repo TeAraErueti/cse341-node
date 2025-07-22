@@ -25,7 +25,15 @@ app.use((req, res, next) => {
 
 // Serve swagger.json so Swagger UI can use it correctly
 app.get('/swagger.json', (req, res) => {
-  res.sendFile(path.join(__dirname, 'routes', 'swagger.json'));
+  res.sendFile(path.join(__dirname, 'swagger.json'));
+});
+
+// Debug route to check path and file presence
+app.get('/debug', (req, res) => {
+  res.json({
+    dir: __dirname,
+    exists: require('fs').existsSync(path.join(__dirname, 'swagger.json'))
+  });
 });
 
 // Swagger UI route
@@ -70,3 +78,5 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('🚨 Unhandled Rejection at:', promise, '\nReason:', reason);
   process.exit(1);
 });
+
+
