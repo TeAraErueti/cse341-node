@@ -1,9 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const path = require('path'); 
+const path = require('path');
+const fs = require('fs');
 const mongodb = require('./data/database');
-const swaggerRouter = require('./routes/swagger'); 
+const swaggerRouter = require('./routes/swagger');
 const mainRoutes = require('./routes');
 
 dotenv.config({ path: './project2/.env' });
@@ -23,20 +24,25 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve swagger.json so Swagger UI can use it correctly
+// Serve swagger.json dynamically and with error handling
 app.get('/swagger.json', (req, res) => {
-  res.sendFile(path.join(__dirname, 'swagger.json'));
-});
-
-
-// Debug route to check path and file presence
-app.get('/debug', (req, res) => {
-  res.json({
-    dir: __dirname,
-    exists: require('fs').existsSync(path.join(__dirname, 'project2', 'swagger.json'))
+  // Adjust the path to wherever your swagger.json actually is
+  const swaggerPath = path.join(__dirname, 'project2', 'swagger.json');
+  fs.access(swaggerPath, fs.constants.R_OK, (err) => {
+    if (err) {
+      console.error('❌ swagger.json file not found or not readable:', swaggerPath);
+      return res.status(404).json({ error: 'swagger.json not found' });
+    }
+    res.sendFile(swaggerPath);
   });
 });
 
+// Debug route to check directory and swagger.json presence
+app.get('/debug', (req, res) => {
+  const dir = __dirname;
+  const swaggerExists = fs.existsSync(path.join(__dirname, 'project2', 'swagger.json'));
+  res.json({ dir, swaggerExists });
+});
 
 // Swagger UI route
 app.use('/api-docs', swaggerRouter);
@@ -44,8 +50,8 @@ app.use('/api-docs', swaggerRouter);
 // Your main app routes
 app.use('/', mainRoutes);
 
+// List files in project directory for debugging (optional)
 app.get('/list-files', (req, res) => {
-  const fs = require('fs');
   fs.readdir(__dirname, (err, files) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ files });
@@ -88,5 +94,3 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('🚨 Unhandled Rejection at:', promise, '\nReason:', reason);
   process.exit(1);
 });
-
-
