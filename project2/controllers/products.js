@@ -92,9 +92,7 @@ const getSingleProduct = async (req, res) => {
  *               price:
  *                 type: string
  *               description:
- *                 type: string
- *               inStock:
- *                 type: boolean
+ *                 type: stringd
  *     responses:
  *       201:
  *         description: Product created
@@ -134,7 +132,7 @@ const createProduct = async (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, price, description, inStock]
+ *             required: [name, price, description]
  *             properties:
  *               name:
  *                 type: string
@@ -142,8 +140,7 @@ const createProduct = async (req, res) => {
  *                 type: string
  *               description:
  *                 type: string
- *               inStock:
- *                 type: boolean
+
  *     responses:
  *       204:
  *         description: Product updated
