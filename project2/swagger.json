@@ -5,9 +5,7 @@
     "description": "API Documentation for managing users and products.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["http"],
   "paths": {
     "/users/": {
       "get": {
