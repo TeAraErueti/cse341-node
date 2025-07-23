@@ -1,32 +1,25 @@
 {
-  "openapi": "3.0.1",
+  "swagger": "2.0",
   "info": {
     "title": "Users API",
-    "description": "API Documentation for Users",
+    "description": "Users API Documentation",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "project2-gdst.onrender.com"
-    }
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
   ],
   "paths": {
-    "/": {
+    "/users/": {
       "get": {
-        "summary": "Root endpoint",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/users/": {
-      "get": {
-        "summary": "Get all users",
-        "responses": {
-          "200": {
-            "description": "List of users"
           },
           "500": {
             "description": "Internal Server Error"
@@ -34,49 +27,39 @@
         }
       },
       "post": {
-        "summary": "Create a new user",
-        "requestBody": {
-          "description": "User object to create",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string",
-                    "example": "John"
-                  },
-                  "lastName": {
-                    "type": "string",
-                    "example": "Doe"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "john.doe@example.com"
-                  },
-                  "nationality": {
-                    "type": "string",
-                    "example": "Maori"
-                  },
-                  "address": {
-                    "type": "string",
-                    "example": "123 Test St, Test City, TC 12345"
-                  },
-                  "phone": {
-                    "type": "string",
-                    "format": "phone",
-                    "example": "123-456-7890"
-                  }
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
                 },
-                "required": ["firstName", "lastName", "email"]
+                "lastName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "favoriteColor": {
+                  "example": "any"
+                },
+                "birthday": {
+                  "example": "any"
+                }
               }
             }
           }
-        },
+        ],
         "responses": {
           "201": {
-            "description": "User created"
+            "description": "Created"
+          },
+          "412": {
+            "description": "Precondition Failed"
           },
           "500": {
             "description": "Internal Server Error"
@@ -85,25 +68,28 @@
       }
     },
     "/users/{id}": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          },
-          "description": "User ID"
-        }
-      ],
       "get": {
-        "summary": "Get user by ID",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "User found"
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "User not found"
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -111,51 +97,51 @@
         }
       },
       "put": {
-        "summary": "Update user by ID",
-        "requestBody": {
-          "description": "User object to update",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string",
-                    "example": "John"
-                  },
-                  "lastName": {
-                    "type": "string",
-                    "example": "Doe"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "john.doe@example.com"
-                  },
-                  "nationality": {
-                    "type": "string",
-                    "example": "Maori"
-                  },
-                  "address": {
-                    "type": "string",
-                    "example": "123 Test St, Test City, TC 12345"
-                  },
-                  "phone": {
-                    "type": "string",
-                    "format": "phone",
-                    "example": "123-456-7890"
-                  }
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "favoriteColor": {
+                  "example": "any"
+                },
+                "birthday": {
+                  "example": "any"
                 }
               }
             }
           }
-        },
+        ],
         "responses": {
           "204": {
-            "description": "User updated"
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "User not found"
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
           },
           "500": {
             "description": "Internal Server Error"
@@ -163,13 +149,24 @@
         }
       },
       "delete": {
-        "summary": "Delete user by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "204": {
-            "description": "User deleted"
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "User not found"
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"

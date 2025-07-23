@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 // Serve swagger.json so Swagger UI can use it correctly
 app.get('/swagger.json', (req, res) => {
-  res.sendFile(path.join(__dirname, 'project2', 'swagger.json'));
+  res.sendFile(path.join(__dirname, 'swagger.json'));
 });
 
 
@@ -44,7 +44,6 @@ app.use('/api-docs', swaggerRouter);
 // Your main app routes
 app.use('/', mainRoutes);
 
-
 app.get('/list-files', (req, res) => {
   const fs = require('fs');
   fs.readdir(__dirname, (err, files) => {
@@ -52,7 +51,6 @@ app.get('/list-files', (req, res) => {
     res.json({ files });
   });
 });
-
 
 // 404 handler
 app.use((req, res) => {
