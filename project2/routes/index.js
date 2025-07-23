@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Root route for '/'
 router.get('/', (req, res) => {
-  res.json({ message: 'Welcome to project2 root endpoint!' });
+  res.json({ message: 'Welcome to the cse341 node project2 root endpoint!' });
 });
 
 // Your actual API endpoints
