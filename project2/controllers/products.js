@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 const validateProduct = (product) => {
   return (
     typeof product.name === 'string' &&
-    typeof product.price === 'number' &&
+    typeof product.price === 'string' &&
     typeof product.description === 'string' &&
     typeof product.inStock === 'boolean'
   );
@@ -90,7 +90,7 @@ const getSingleProduct = async (req, res) => {
  *               name:
  *                 type: string
  *               price:
- *                 type: number
+ *                 type: string
  *               description:
  *                 type: string
  *               inStock:
@@ -139,7 +139,7 @@ const createProduct = async (req, res) => {
  *               name:
  *                 type: string
  *               price:
- *                 type: number
+ *                 type: string
  *               description:
  *                 type: string
  *               inStock:
