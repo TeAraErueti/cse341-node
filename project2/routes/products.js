@@ -10,8 +10,8 @@ const validateProduct = (req, res, next) => {
     return res.status(400).json({ error: 'Product name is required and must be a string.' });
   }
 
-  if (price === undefined || typeof price !== 'number') {
-    return res.status(400).json({ error: 'Product price is required and must be a number.' });
+  if (price === undefined || typeof price !== 'string') {
+    return res.status(400).json({ error: 'Product price is required and must be a string.' });
   }
 
   if (description && typeof description !== 'string') {
@@ -71,7 +71,8 @@ router.get('/:id', productsController.getSingleProduct);
  *               name:
  *                 type: string
  *               price:
- *                 type: number
+ *                 type: string
+ *                 example: "$799.99"
  *               description:
  *                 type: string
  *     responses:
@@ -105,7 +106,8 @@ router.post('/', validateProduct, productsController.createProduct);
  *               name:
  *                 type: string
  *               price:
- *                 type: number
+ *                 type: string
+ *                 example: "$699.99"
  *               description:
  *                 type: string
  *     responses:
