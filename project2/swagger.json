@@ -4,10 +4,8 @@
     "title": "Users & Products API",
     "description": "API Documentation for managing users and products.",
     "version": "1.0.0"
-  },
-  "host": "project2-gdst.onrender.com/api-docs/",
+  },  
   "basePath": "/",
-  "schemes": ["https"],
   "paths": {
     "/users/": {
       "get": {
