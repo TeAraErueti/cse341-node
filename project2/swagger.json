@@ -4,7 +4,7 @@
     "title": "Users & Products API",
     "description": "API Documentation for managing users and products.",
     "version": "1.0.0"
-  },  
+  },
   "basePath": "/",
   "paths": {
     "/users/": {
@@ -135,7 +135,7 @@
               "required": ["name", "price"],
               "properties": {
                 "name": { "type": "string", "example": "Laptop" },
-                "price": { "type": "number", "example": 799.99 },
+                "price": { "type": "string", "example": "$799.99" },
                 "description": { "type": "string", "example": "High-end device" }
               }
             }
@@ -181,7 +181,7 @@
               "required": ["name", "price"],
               "properties": {
                 "name": { "type": "string", "example": "Updated Laptop" },
-                "price": { "type": "number", "example": 699.99 },
+                "price": { "type": "string", "example": "$699.99" },
                 "description": { "type": "string", "example": "Updated description" }
               }
             }
