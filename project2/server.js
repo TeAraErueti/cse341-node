@@ -1,65 +1,69 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require('path'); 
 const mongodb = require('./data/database');
-const swaggerRouter = require('./routes/swagger');
+const swaggerRouter = require('./routes/swagger'); 
 const mainRoutes = require('./routes');
-
-const app = express();
 
 dotenv.config({ path: './project2/.env' });
 
-console.log('✅ DEBUG CHECK');
-console.log('MONGODB_URI:', process.env.MONGODB_URI);
-console.log('DB_NAME:', process.env.DB_NAME);
-
+const app = express();
 const port = process.env.PORT || 3000;
 
-// ✅ Log every incoming request
+// Enable CORS
+app.use(cors());
+
+// Parse JSON request bodies
+app.use(express.json());
+
+// Log requests
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   next();
 });
 
-// ✅ JSON parsing
-app.use(express.json());
-app.use(bodyParser.json());
-
-// ✅ CORS headers
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  next();
+// Serve swagger.json so Swagger UI can use it correctly
+app.get('/swagger.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'swagger.json'));
 });
 
-// ✅ Swagger UI route
+
+// Debug route to check path and file presence
+app.get('/debug', (req, res) => {
+  res.json({
+    dir: __dirname,
+    exists: require('fs').existsSync(path.join(__dirname, 'project2', 'swagger.json'))
+  });
+});
+
+
+// Swagger UI route
 app.use('/api-docs', swaggerRouter);
 
-// ✅ Basic test route
-app.get('/', (req, res) => {
-  console.log('✅ Direct root route hit in server.js');
-  res.send('Hello World');
-});
-
-// ✅ Main app routes
+// Your main app routes
 app.use('/', mainRoutes);
 
-// ✅ 404 handler (for unknown routes)
-app.use((req, res, next) => {
+app.get('/list-files', (req, res) => {
+  const fs = require('fs');
+  fs.readdir(__dirname, (err, files) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ files });
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
   res.status(404).json({ message: '❌ Route not found' });
 });
 
-// ✅ Express global error handler
+// Error handler
 app.use((err, req, res, next) => {
   console.error('❌ Unhandled error:', err.stack);
   res.status(500).json({ message: '❌ Internal Server Error', error: err.message });
 });
 
-// ✅ Connect to DB and start server
+// Connect to DB and start server
 mongodb.initDb()
   .then(() => {
     console.log('✅ Connected to database');
@@ -70,24 +74,19 @@ mongodb.initDb()
   })
   .catch(err => {
     console.error('❌ Failed to connect to DB:', err);
-    process.exit(1); // Exit if DB connection fails
+    process.exit(1);
   });
 
-
-// ✅ Catch uncaught exceptions
+// Handle uncaught exceptions
 process.on('uncaughtException', (err, origin) => {
-  console.error(
-    `🚨 Uncaught Exception:\n${err.stack || err}\n📍 Origin: ${origin}`
-  );
-  process.exit(1); // Optional: Exit the process
+  console.error(`🚨 Uncaught Exception:\n${err.stack || err}\nOrigin: ${origin}`);
+  process.exit(1);
 });
 
-// ✅ Catch unhandled promise rejections
+// Handle unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
-  console.error(
-    '🚨 Unhandled Rejection at:', promise,
-    '\n💥 Reason:', reason
-  );
-  process.exit(1); // Optional: Exit the process
+  console.error('🚨 Unhandled Rejection at:', promise, '\nReason:', reason);
+  process.exit(1);
 });
+
 
