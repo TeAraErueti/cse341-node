@@ -8,6 +8,8 @@ router.get('/', (req, res) => {
 
 // Your actual API endpoints
 router.use('/users', require('./users'));
+router.use('/products', require('./products'));
+
 
 module.exports = router;
 
