@@ -6,19 +6,24 @@ const productsController = require('../controllers/products');
 const validateProduct = (req, res, next) => {
   const { name, price, description } = req.body;
 
-  if (!name || typeof name !== 'string') {
-    return res.status(400).json({ error: 'Product name is required and must be a string.' });
-  }
+  try {
+    if (!name || typeof name !== 'string') {
+      return res.status(400).json({ error: 'Product name is required and must be a string.' });
+    }
 
-  if (price === undefined || typeof price !== 'string') {
-    return res.status(400).json({ error: 'Product price is required and must be a string.' });
-  }
+    if (price === undefined || typeof price !== 'string') {
+      return res.status(400).json({ error: 'Product price is required and must be a string.' });
+    }
 
-  if (description && typeof description !== 'string') {
-    return res.status(400).json({ error: 'Product description must be a string if provided.' });
-  }
+    if (description && typeof description !== 'string') {
+      return res.status(400).json({ error: 'Product description must be a string if provided.' });
+    }
 
-  next();
+    next();
+  } catch (error) {
+    console.error('Validation error:', error);
+    res.status(500).json({ error: 'Internal server error during validation.' });
+  }
 };
 
 /**
@@ -78,8 +83,19 @@ router.get('/:id', productsController.getSingleProduct);
  *     responses:
  *       201:
  *         description: Product created successfully
+ *       400:
+ *         description: Invalid product data
+ *       500:
+ *         description: Internal server error
  */
-router.post('/', validateProduct, productsController.createProduct);
+router.post('/', validateProduct, async (req, res) => {
+  try {
+    await productsController.createProduct(req, res);
+  } catch (error) {
+    console.error('POST /products error:', error);
+    res.status(500).json({ error: 'Failed to create product due to server error.' });
+  }
+});
 
 /**
  * @swagger
@@ -113,8 +129,19 @@ router.post('/', validateProduct, productsController.createProduct);
  *     responses:
  *       204:
  *         description: Product updated successfully
+ *       400:
+ *         description: Invalid product data
+ *       500:
+ *         description: Internal server error
  */
-router.put('/:id', validateProduct, productsController.updateProduct);
+router.put('/:id', validateProduct, async (req, res) => {
+  try {
+    await productsController.updateProduct(req, res);
+  } catch (error) {
+    console.error('PUT /products/:id error:', error);
+    res.status(500).json({ error: 'Failed to update product due to server error.' });
+  }
+});
 
 /**
  * @swagger
