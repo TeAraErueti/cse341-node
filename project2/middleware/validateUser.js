@@ -11,16 +11,26 @@ const saveUser = (req, res, next) => {
     address: 'string',
     phone: 'string',
   };
-  validator(req.body, validationRule, {}, (err, status) => {
-    if (!status) {
-      return res.status(412).json({
-        success: false,
-        message: 'Validation failed',
-        data: err
-      });
-    }
-    next();
-  });
+
+  try {
+    validator(req.body, validationRule, {}, (err, status) => {
+      if (!status) {
+        return res.status(400).json({
+          success: false,
+          message: 'Validation failed',
+          data: err
+        });
+      }
+      next();
+    });
+  } catch (error) {
+    console.error('Validation middleware error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error during validation.',
+      error: error.message
+    });
+  }
 };
 
 // Middleware to validate MongoDB ObjectId in params.id
