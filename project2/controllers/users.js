@@ -47,8 +47,10 @@ const createUser = async (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    favoriteColor: req.body.favoriteColor,
-    birthday: req.body.birthday
+    nationality: req.body.nationality,
+    birthday: req.body.birthday,
+    address: req.body.address,
+    phone: req.body.phone,
   };
 
   try {
@@ -75,8 +77,10 @@ const updateUser = async (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    favoriteColor: req.body.favoriteColor,
-    birthday: req.body.birthday
+    nationality: req.body.nationality,
+    birthday: req.body.birthday,
+    address: req.body.address,
+    phone: req.body.phone,
   };
 
   try {
