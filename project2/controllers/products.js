@@ -6,7 +6,7 @@ const validateProduct = (product) => {
   return (
     typeof product.name === 'string' &&
     typeof product.price === 'string' &&
-    typeof product.description === 'string'
+    typeof product.category === 'string'
   );
 };
 
@@ -84,13 +84,13 @@ const getSingleProduct = async (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, price, description]
+ *             required: [name, price, cateogry]
  *             properties:
  *               name:
  *                 type: string
  *               price:
  *                 type: string
- *               description:
+ *               category:
  *                 type: string
  *     responses:
  *       201:
@@ -131,13 +131,13 @@ const createProduct = async (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, price, description]
+ *             required: [name, price, category]
  *             properties:
  *               name:
  *                 type: string
  *               price:
  *                 type: string
- *               description:
+ *               category:
  *                 type: string
 
  *     responses:

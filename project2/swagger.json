@@ -29,11 +29,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": { "example": "any" },
-                "lastName": { "example": "any" },
-                "email": { "example": "any" },
-                "favoriteColor": { "example": "any" },
-                "birthday": { "example": "any" }
+                "firstName": { "example": "Joe" },
+                "lastName": { "example": "Bloggs" },
+                "email": { "example": "JoeBloggs@example.com" },
+                "nationality": { "example": "Australian" },
+                "birthday": { "example": "mm/dd/yyyy" },
+                "address": { "example": "29 Booksbrough Avenue, Sydney, Australia" },
+                "phone": { "example": "123-456-7895" }
               }
             }
           }
@@ -79,11 +81,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": { "example": "any" },
-                "lastName": { "example": "any" },
-                "email": { "example": "any" },
-                "favoriteColor": { "example": "any" },
-                "birthday": { "example": "any" }
+                "firstName": { "example": "Joe" },
+                "lastName": { "example": "Bloggs" },
+                "email": { "example": "JoeBloggs@example.com" },
+                "nationality": { "example": "Australian" },
+                "birthday": { "example": "mm/dd/yyyy" },
+                "address": { "example": "29 Booksbrough Avenue, Sydney, Australia" },
+                "phone": { "example": "123-456-7895" }
               }
             }
           }
@@ -136,7 +140,7 @@
               "properties": {
                 "name": { "type": "string", "example": "Laptop" },
                 "price": { "type": "string", "example": "$799.99" },
-                "description": { "type": "string", "example": "High-end device" }
+                "category": { "type": "string", "example": "High-end device" }
               }
             }
           }
@@ -182,7 +186,7 @@
               "properties": {
                 "name": { "type": "string", "example": "Updated Laptop" },
                 "price": { "type": "string", "example": "$699.99" },
-                "description": { "type": "string", "example": "Updated description" }
+                "category": { "type": "string", "example": "Electronics" }
               }
             }
           }
