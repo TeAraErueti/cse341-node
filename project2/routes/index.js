@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     res.send(`
       <h1>🚀 Welcome, ${req.user.username}!</h1>
       <p>You are logged in via GitHub.</p>
-      <a href="/auth/logout">Logout</a>
+      <a href="/auth/logout">🔒 Logout</a>
     `);
   } else {
     res.send(`
@@ -22,3 +22,4 @@ router.use('/users', require('./users'));
 router.use('/products', require('./products'));
 
 module.exports = router;
+
