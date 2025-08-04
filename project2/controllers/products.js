@@ -84,7 +84,7 @@ const getSingleProduct = async (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, price, cateogry]
+ *             required: [name, price, category]
  *             properties:
  *               name:
  *                 type: string
