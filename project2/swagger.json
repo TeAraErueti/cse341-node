@@ -2,40 +2,54 @@
   "swagger": "2.0",
   "info": {
     "title": "Users & Products API",
-    "description": "API Documentation for managing users and products.",
+    "description": "API Documentation for managing users and products with GitHub OAuth2 authentication.",
     "version": "1.0.0"
   },
   "basePath": "/",
+  "schemes": ["https"],
+  "securityDefinitions": {
+    "OAuth2GitHub": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "tokenUrl": "https://github.com/login/oauth/access_token",
+      "scopes": {
+        "user": "Access user info"
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2GitHub": ["user"]
+    }
+  ],
   "paths": {
     "/users/": {
       "get": {
-        "description": "",
+        "description": "Get all users",
         "produces": ["application/json"],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new user",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": { "example": "Joe" },
-                "lastName": { "example": "Bloggs" },
-                "email": { "example": "JoeBloggs@example.com" },
-                "nationality": { "example": "Australian" },
-                "birthday": { "example": "mm/dd/yyyy" },
-                "address": { "example": "29 Booksbrough Avenue, Sydney, Australia" },
-                "phone": { "example": "123-456-7895" }
+                "firstName": { "type": "string", "example": "Joe" },
+                "lastName": { "type": "string", "example": "Bloggs" },
+                "email": { "type": "string", "example": "JoeBloggs@example.com" },
+                "nationality": { "type": "string", "example": "Australian" },
+                "birthday": { "type": "string", "example": "01/01/1990" },
+                "address": { "type": "string", "example": "29 Booksbrough Avenue, Sydney, Australia" },
+                "phone": { "type": "string", "example": "123-456-7895" }
               }
             }
           }
@@ -49,7 +63,7 @@
     },
     "/users/{id}": {
       "get": {
-        "description": "",
+        "description": "Get a user by ID",
         "produces": ["application/json"],
         "parameters": [
           {
@@ -67,7 +81,7 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "Update a user by ID",
         "parameters": [
           {
             "name": "id",
@@ -81,13 +95,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": { "example": "Joe" },
-                "lastName": { "example": "Bloggs" },
-                "email": { "example": "JoeBloggs@example.com" },
-                "nationality": { "example": "Australian" },
-                "birthday": { "example": "mm/dd/yyyy" },
-                "address": { "example": "29 Booksbrough Avenue, Sydney, Australia" },
-                "phone": { "example": "123-456-7895" }
+                "firstName": { "type": "string", "example": "Joe" },
+                "lastName": { "type": "string", "example": "Bloggs" },
+                "email": { "type": "string", "example": "JoeBloggs@example.com" },
+                "nationality": { "type": "string", "example": "Australian" },
+                "birthday": { "type": "string", "example": "01/01/1990" },
+                "address": { "type": "string", "example": "29 Booksbrough Avenue, Sydney, Australia" },
+                "phone": { "type": "string", "example": "123-456-7895" }
               }
             }
           }
@@ -101,7 +115,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a user by ID",
         "parameters": [
           {
             "name": "id",
@@ -168,7 +182,7 @@
         }
       },
       "put": {
-        "description": "Update a product",
+        "description": "Update a product by ID",
         "parameters": [
           {
             "name": "id",
@@ -198,7 +212,7 @@
         }
       },
       "delete": {
-        "description": "Delete a product",
+        "description": "Delete a product by ID",
         "parameters": [
           {
             "name": "id",
