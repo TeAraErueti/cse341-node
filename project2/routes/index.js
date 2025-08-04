@@ -1,20 +1,24 @@
 const express = require('express');
 const router = express.Router();
 
-// ✅ Auth middleware from auth.js logic
-const ensureAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-  res.status(401).json({ message: '❌ Unauthorized. Please log in via GitHub.' });
-};
+const ensureAuthenticated = require('../middleware/authMiddleware');
 
-// ✅ Protect root route with GitHub OAuth login
-router.get('/', ensureAuthenticated, (req, res) => {
-  res.type('text/plain').send(`✨ Welcome ${req.user.username}! You're logged in via GitHub.`);
+router.get('/', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.send(`
+      <h1>🚀 Welcome, ${req.user.username}!</h1>
+      <p>You are logged in via GitHub.</p>
+      <a href="/auth/logout">Logout</a>
+    `);
+  } else {
+    res.send(`
+      <h1>✨ Welcome to the CSE341 Node Project2 API!</h1>
+      <p><a href="/auth/github">🔐 Login with GitHub</a></p>
+    `);
+  }
 });
 
-// ✅ Leftm public so can use their own selective route-level auth
 router.use('/users', require('./users'));
 router.use('/products', require('./products'));
 
 module.exports = router;
-
