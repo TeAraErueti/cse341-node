@@ -16,8 +16,8 @@ const validateProduct = (req, res, next) => {
       return res.status(400).json({ error: 'Product price is required and must be a string.' });
     }
 
-    if (description && typeof description !== 'string') {
-      return res.status(400).json({ error: 'Product description must be a string if provided.' });
+    if (category && typeof category !== 'string') {
+      return res.status(400).json({ error: 'Product category must be a string if provided.' });
     }
 
     next();
@@ -81,7 +81,7 @@ router.get('/:id', productsController.getSingleProduct);
  *               price:
  *                 type: string
  *                 example: "$799.99"
- *               description:
+ *               category:
  *                 type: string
  *     responses:
  *       201:
@@ -129,7 +129,7 @@ router.post('/', ensureAuthenticated, validateProduct, async (req, res) => {
  *               price:
  *                 type: string
  *                 example: "$699.99"
- *               description:
+ *               category:
  *                 type: string
  *     responses:
  *       204:
@@ -169,4 +169,3 @@ router.put('/:id', ensureAuthenticated, validateProduct, async (req, res) => {
 router.delete('/:id', ensureAuthenticated, productsController.deleteProduct);
 
 module.exports = router;
-
