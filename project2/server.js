@@ -3,9 +3,13 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const session = require('express-session');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
 const mongodb = require('./data/database');
 const swaggerRouter = require('./routes/swagger');
 const mainRoutes = require('./routes');
+const authRoutes = require('./routes/auth'); 
 
 dotenv.config({ path: './project2/.env' });
 
@@ -18,6 +22,38 @@ app.use(cors());
 // Parse JSON request bodies
 app.use(express.json());
 
+// ------------------------------------------
+// 🛡️ Passport GitHub OAuth Setup
+// ------------------------------------------
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
+
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: 'https://project2-gdst.onrender.com/auth/github/callback' 
+},
+(accessToken, refreshToken, profile, done) => {
+  // You could store this user in the database here
+  console.log('✅ GitHub Profile:', profile.username);
+  return done(null, profile);
+}));
+// ------------------------------------------
+
 // Log requests
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
@@ -26,7 +62,6 @@ app.use((req, res, next) => {
 
 // Serve swagger.json dynamically and with error handling
 app.get('/swagger.json', (req, res) => {
-  // Adjust the path to wherever your swagger.json actually is
   const swaggerPath = path.join(__dirname, 'project2', 'swagger.json');
   fs.access(swaggerPath, fs.constants.R_OK, (err) => {
     if (err) {
@@ -46,6 +81,9 @@ app.get('/debug', (req, res) => {
 
 // Swagger UI route
 app.use('/api-docs', swaggerRouter);
+
+// 👤 GitHub Auth Routes
+app.use('/', authRoutes); // Make sure this is above the main routes
 
 // Your main app routes
 app.use('/', mainRoutes);
