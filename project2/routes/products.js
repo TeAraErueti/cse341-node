@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/products');
+const ensureAuthenticated = require('../middleware/authMiddleware'); // ✅ protect private routes
 
 // Validation middleware
 const validateProduct = (req, res, next) => {
@@ -63,6 +64,8 @@ router.get('/:id', productsController.getSingleProduct);
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
+ *     security:
+ *       - OAuth2GitHub: [user]
  *     requestBody:
  *       required: true
  *       content:
@@ -88,7 +91,7 @@ router.get('/:id', productsController.getSingleProduct);
  *       500:
  *         description: Internal server error
  */
-router.post('/', validateProduct, async (req, res) => {
+router.post('/', ensureAuthenticated, validateProduct, async (req, res) => {
   try {
     await productsController.createProduct(req, res);
   } catch (error) {
@@ -103,6 +106,8 @@ router.post('/', validateProduct, async (req, res) => {
  *   put:
  *     summary: Update an existing product
  *     tags: [Products]
+ *     security:
+ *       - OAuth2GitHub: [user]
  *     parameters:
  *       - in: path
  *         name: id
@@ -134,7 +139,7 @@ router.post('/', validateProduct, async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.put('/:id', validateProduct, async (req, res) => {
+router.put('/:id', ensureAuthenticated, validateProduct, async (req, res) => {
   try {
     await productsController.updateProduct(req, res);
   } catch (error) {
@@ -149,6 +154,8 @@ router.put('/:id', validateProduct, async (req, res) => {
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
+ *     security:
+ *       - OAuth2GitHub: [user]
  *     parameters:
  *       - in: path
  *         name: id
@@ -159,6 +166,7 @@ router.put('/:id', validateProduct, async (req, res) => {
  *       200:
  *         description: Product deleted successfully
  */
-router.delete('/:id', productsController.deleteProduct);
+router.delete('/:id', ensureAuthenticated, productsController.deleteProduct);
 
 module.exports = router;
+
