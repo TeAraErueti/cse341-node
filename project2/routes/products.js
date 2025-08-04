@@ -5,7 +5,7 @@ const ensureAuthenticated = require('../middleware/authMiddleware'); // ✅ prot
 
 // Validation middleware
 const validateProduct = (req, res, next) => {
-  const { name, price, description } = req.body;
+  const { name, price, category } = req.body;
 
   try {
     if (!name || typeof name !== 'string') {
